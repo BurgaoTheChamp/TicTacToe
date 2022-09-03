@@ -18,11 +18,11 @@ class TicTacToe
         ~TicTacToe();
 
         // getters
-        const int &getPosition(const int &row, const int &col) const;
+        const int getPosition(const int &row, const int &col) const;
 
-        const int &getFreeSpaces() const;
+        const int getFreeSpaces() const;
 
-        const char &getWinner() const;
+        const char getWinner() const;
 
         // setters
         void setPosition(const int &row, const int &col, const char &position);
@@ -32,11 +32,11 @@ class TicTacToe
 
         void playerMove();
 
-        const int &evaluate();
+        const int evaluate();
 
-        const int &minimax(const int &depth, const bool &isMax);
+        const int minimax(const int &depth, const bool &isMax);
 
-        const int &findBestMovePosition();
+        const int findBestMovePosition();
 
         void pcMove();
         // utilities methods

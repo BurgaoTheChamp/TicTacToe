@@ -26,11 +26,11 @@ TicTacToe::~TicTacToe(){
 }
 
 // getters
-const int &TicTacToe::getPosition(const int &row, const int &col) const{
+const int TicTacToe::getPosition(const int &row, const int &col) const{
     return this->board[row*3 + col];
 }
 
-const int &TicTacToe::getFreeSpaces() const{
+const int TicTacToe::getFreeSpaces() const{
     int freeSpaces{0};
     for (int i = 0; i < 9; i++)
     {
@@ -42,7 +42,7 @@ const int &TicTacToe::getFreeSpaces() const{
     return freeSpaces;
 }
 
-const char &TicTacToe::getWinner() const{
+const char TicTacToe::getWinner() const{
     if (this->getPosition(0, 0) == this->getPosition(1 , 1) && this->getPosition(0, 0) == this->getPosition(2, 2)){
         return this->getPosition(0, 0);
     }
@@ -101,7 +101,7 @@ void TicTacToe::playerMove(){
     } while (this->getPosition(x - 1, y - 1) != ' ');    
 }
 
-const int &TicTacToe::evaluate(){
+const int TicTacToe::evaluate(){
     // Looking for X or O to win for rows
     for (int i = 0; i < 3; i++)
     {
@@ -150,7 +150,7 @@ const int &TicTacToe::evaluate(){
     return 0;   
 }
 
-const int &TicTacToe::minimax(const int &depth, const bool &isMax){
+const int TicTacToe::minimax(const int &depth, const bool &isMax){
     int score = this->evaluate();
     // If maximize has won the game return their evaluated score
     if (score == 10){
@@ -218,7 +218,7 @@ const int &TicTacToe::minimax(const int &depth, const bool &isMax){
     
 }
 
-const int &TicTacToe::findBestMovePosition()
+const int TicTacToe::findBestMovePosition()
 {
     int bestVal = -1000;
     int bestMove = -1;
