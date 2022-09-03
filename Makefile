@@ -1,5 +1,11 @@
-TicTacToe: TicTacToe.h TicTacToe.cpp main.cpp
-	g++ -o TicTacToe main.cpp TicTacToe.cpp
+output: TicTacToe.o main.o
+	g++ TicTacToe.o main.o -o output 
+
+TicTacToe.o: TicTacToe.cpp
+	g++ -c TicTacToe.cpp
+
+main.o: main.cpp
+	g++ -c main.cpp
 
 clean:
-    rm TicTacToe
+    rm *.o output
