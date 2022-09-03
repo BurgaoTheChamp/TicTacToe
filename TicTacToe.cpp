@@ -17,6 +17,12 @@ TicTacToe::TicTacToe(){
         this->pc = 'X';
     }
 
+    for (int i = 0; i < 9; i++)
+    {
+        this->board[i] = ' ';
+    }
+    
+
     // this->board = std::make_shared<char[9]>();
 }
 
@@ -26,7 +32,7 @@ TicTacToe::~TicTacToe(){
 }
 
 // getters
-const int TicTacToe::getPosition(const int &row, const int &col) const{
+const char TicTacToe::getPosition(const int &row, const int &col) const{
     return this->board[row*3 + col];
 }
 

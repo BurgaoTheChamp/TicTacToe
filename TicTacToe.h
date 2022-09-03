@@ -18,7 +18,7 @@ class TicTacToe
         ~TicTacToe();
 
         // getters
-        const int getPosition(const int &row, const int &col) const;
+        const char getPosition(const int &row, const int &col) const;
 
         const int getFreeSpaces() const;
 

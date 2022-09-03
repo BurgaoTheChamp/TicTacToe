@@ -1,11 +1,19 @@
 #include "TicTacToe.h"
 
+void log(char test){
+    std::cout << test << std::endl; 
+}
+
 int main(){
 
     char winner = ' ';
     char response = ' ';
 
+    log('2');
+
     TicTacToe game;
+
+    log('1');
 
     do
     {
@@ -18,6 +26,7 @@ int main(){
             game.printBoard();
 
             game.playerMove();
+            
             winner = game.getWinner();
             if(winner != ' ' || game.getFreeSpaces() == 0)
             {
