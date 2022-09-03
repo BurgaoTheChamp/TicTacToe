@@ -3,3 +3,6 @@ test.cpp
 a.exe
 test1.cpp
 test1.exe
+main.o
+output.exe
+TicTacToe.o 
