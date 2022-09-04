@@ -11,6 +11,7 @@ class TicTacToe
         char *board; // board[i*col +j]
         // std::shared_ptr<char[9]> board; // board[i*col +j] 
         char player, pc; // Holds the players characters
+        char empty = ' ';
     public:
         // construrctors
         TicTacToe();

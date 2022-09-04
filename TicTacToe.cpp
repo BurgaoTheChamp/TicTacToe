@@ -19,7 +19,7 @@ TicTacToe::TicTacToe(){
 
     for (int i = 0; i < 9; i++)
     {
-        this->board[i] = ' ';
+        this->board[i] = this->empty;
     }
     
 
@@ -40,7 +40,7 @@ const int TicTacToe::getFreeSpaces() const{
     int freeSpaces{0};
     for (int i = 0; i < 9; i++)
     {
-        if (this->board[i] == ' ')
+        if (this->board[i] == this->empty)
         {
             freeSpaces++;
         }
@@ -52,25 +52,25 @@ const char TicTacToe::getWinner() const{
     if (this->getPosition(0, 0) == this->getPosition(1 , 1) && this->getPosition(0, 0) == this->getPosition(2, 2)){
         return this->getPosition(0, 0);
     }
-    if (this->getPosition(0, 2) == this->getPosition(1, 1) && this->getPosition(0, 2) == this->getPosition(2 , 0))
+    if (this->getPosition(0, 2) == this->getPosition(1, 1) && this->getPosition(0, 2) == this->getPosition(2, 0))
     {
         return this->getPosition(0, 2);
     }
     for (int i = 0; i < 3; i++)
     {
-        if (this->getPosition(i, 0) == this->getPosition(i , 1) && this->getPosition(i, 0) == this->getPosition(i , 2))
+        if (this->getPosition(i, 0) == this->getPosition(i , 1) && this->getPosition(i, 0) == this->getPosition(i, 2))
         {
             return this->getPosition(i, 0);
         }   
     }
     for (int j = 0; j < 3; j++)
     {
-        if (this->getPosition(0, j) == this->getPosition(1, j) && this->getPosition(0, j) == this->getPosition(2 , j))
+        if (this->getPosition(0, j) == this->getPosition(1, j) && this->getPosition(0, j) == this->getPosition(2, j))
         {
             return this->getPosition(0, j);
         }   
     }
-    return ' ';
+    return this->empty;
 }
 
 // setters
@@ -82,8 +82,8 @@ void TicTacToe::setPosition(const int &row, const int &col,const char &position)
 void TicTacToe::resetBoard(){
     for (int i = 0; i < 9; i++)
     {
-        this->board[i] == ' ';
-    }    
+        this->board[i] = this->empty;
+    }   
 }
 
 void TicTacToe::playerMove(){
@@ -96,7 +96,7 @@ void TicTacToe::playerMove(){
         std::cout << " Enter a column between 1 and 3: ";
         std::cin >> y;
 
-        if(this->getPosition(x - 1, y - 1) != ' '){
+        if(this->getPosition(x - 1, y - 1) != this->empty){
             std::cout << " Your move is invalid!" << std::endl;
         }
         else
@@ -104,7 +104,7 @@ void TicTacToe::playerMove(){
             this->setPosition(x - 1, y - 1, this->player);
             break;
         }
-    } while (this->getPosition(x - 1, y - 1) != ' ');    
+    } while (this->getPosition(x - 1, y - 1) != this->empty);    
 }
 
 const int TicTacToe::evaluate(){
@@ -181,7 +181,7 @@ const int TicTacToe::minimax(const int &depth, const bool &isMax){
             for (int j = 0; j < 3; j++)
             {
                 // Check if the position is empty
-                if (this->getPosition(i, j) == ' ')
+                if (this->getPosition(i, j) == this->empty)
                 {
                     // Pc does a move
                     this->setPosition(i, j, pc);
@@ -190,7 +190,7 @@ const int TicTacToe::minimax(const int &depth, const bool &isMax){
                     best = std::max(best, minimax(depth + 1, !isMax));
 
                     // Undo the move
-                    this->setPosition(i, j, ' ');
+                    this->setPosition(i, j, this->empty);
                 }
                 
             }
@@ -205,7 +205,7 @@ const int TicTacToe::minimax(const int &depth, const bool &isMax){
             for (int j = 0; i < 3; j++)
             {
                 // Check if the position is empty
-                if (this->getPosition(i, j) == ' ')
+                if (this->getPosition(i, j) == this->empty)
                 {
                     // Pc does a move
                     this->setPosition(i, j, player);
@@ -214,7 +214,7 @@ const int TicTacToe::minimax(const int &depth, const bool &isMax){
                     best = std::min(best, minimax(depth + 1, !isMax));
 
                     // Undo the move
-                    this->setPosition(i, j, ' ');
+                    this->setPosition(i, j, this->empty);
                 }
             }
             
@@ -235,7 +235,7 @@ const int TicTacToe::findBestMovePosition()
         for (int j = 0; j<3; j++)
         {
             // Check if cell is empty
-            if (this->getPosition(i, j) ==' ')
+            if (this->getPosition(i, j) == this->empty)
             {
                 // Make the move
                 this->setPosition(i, j, this->pc);
@@ -244,7 +244,7 @@ const int TicTacToe::findBestMovePosition()
                 int moveVal = this->minimax(0, false);
  
                 // Undo the move
-                this->setPosition(i, j, ' ');
+                this->setPosition(i, j, this->empty);
  
                 // If the value of the current move is more than the best balue, then update best
                 if (moveVal > bestVal)

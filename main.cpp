@@ -9,16 +9,13 @@ int main(){
     char winner = ' ';
     char response = ' ';
 
-    log('2');
-
     TicTacToe game;
-
-    log('1');
 
     do
     {
         winner = ' ';
         response = ' ';
+
         game.resetBoard();
 
         while(winner == ' ' && game.getFreeSpaces() != 0)
@@ -26,15 +23,18 @@ int main(){
             game.printBoard();
 
             game.playerMove();
-            
+
             winner = game.getWinner();
+
             if(winner != ' ' || game.getFreeSpaces() == 0)
             {
                 break;
             }
 
-            game.pcMove();
+            // game.pcMove();
+
             winner = game.getWinner();
+
             if(winner != ' ' || game.getFreeSpaces() == 0)
             {
                 break;
