@@ -49,27 +49,48 @@ const int TicTacToe::getFreeSpaces() const{
 }
 
 const char TicTacToe::getWinner() const{
+
+    // Check if the characters in the right diagonal are equal and different from empty
     if (this->getPosition(0, 0) == this->getPosition(1 , 1) && this->getPosition(0, 0) == this->getPosition(2, 2)){
-        return this->getPosition(0, 0);
+        if (!(this->getPosition(0, 0) == this->empty))
+        {
+            return this->getPosition(0, 0);
+        }
     }
+
+    // Check if the characters in the left diagonal are equal and different from empty
     if (this->getPosition(0, 2) == this->getPosition(1, 1) && this->getPosition(0, 2) == this->getPosition(2, 0))
     {
-        return this->getPosition(0, 2);
+        if (!(this->getPosition(0, 2) == this->empty))
+        {
+            return this->getPosition(0, 2);
+        }
     }
+
+    // Check if the characters in the rows are equal and different from empty
     for (int i = 0; i < 3; i++)
     {
-        if (this->getPosition(i, 0) == this->getPosition(i , 1) && this->getPosition(i, 0) == this->getPosition(i, 2))
+        if (this->getPosition(i, 0) == this->getPosition(i, 1) && this->getPosition(i, 0) == this->getPosition(i, 2))
         {
-            return this->getPosition(i, 0);
+            if (!(this->getPosition(i, 0) == this->empty))
+            {
+                return this->getPosition(i, 0);
+            }
         }   
     }
+
+    // Check if the characters in the columns are equal and different from empty
     for (int j = 0; j < 3; j++)
     {
         if (this->getPosition(0, j) == this->getPosition(1, j) && this->getPosition(0, j) == this->getPosition(2, j))
         {
-            return this->getPosition(0, j);
+            if (!(this->getPosition(0, j) == this->empty))
+            {
+                return this->getPosition(0, j);
+            }
         }   
     }
+
     return this->empty;
 }
 

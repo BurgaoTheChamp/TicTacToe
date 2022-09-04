@@ -5,6 +5,11 @@
 #include <iostream>
 #include <cctype>
 
+template<typename anytype>
+void logT(anytype string){
+    std::cout << string << std::endl; 
+}
+
 class TicTacToe
 {
     private:

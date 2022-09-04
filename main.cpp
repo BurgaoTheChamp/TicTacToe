@@ -1,9 +1,5 @@
 #include "TicTacToe.h"
 
-void log(char test){
-    std::cout << test << std::endl; 
-}
-
 int main(){
 
     char winner = ' ';
@@ -20,6 +16,7 @@ int main(){
 
         while(winner == ' ' && game.getFreeSpaces() != 0)
         {
+            
             game.printBoard();
 
             game.playerMove();
@@ -31,7 +28,7 @@ int main(){
                 break;
             }
 
-            // game.pcMove();
+            game.pcMove();
 
             winner = game.getWinner();
 
