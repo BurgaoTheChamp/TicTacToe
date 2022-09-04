@@ -17,6 +17,11 @@ class TicTacToe
         // std::shared_ptr<char[9]> board; // board[i*col +j] 
         char player, pc; // Holds the players characters
         char empty = ' ';
+        struct Move
+        {   
+            int row, col;
+        };
+
     public:
         // construrctors
         TicTacToe();
@@ -42,7 +47,7 @@ class TicTacToe
 
         const int minimax(const int &depth, const bool &isMax);
 
-        const int findBestMovePosition();
+        Move findBestMovePosition();
 
         void pcMove();
         // utilities methods

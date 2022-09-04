@@ -129,16 +129,18 @@ void TicTacToe::playerMove(){
 }
 
 const int TicTacToe::evaluate(){
+
     // Looking for X or O to win for rows
     for (int i = 0; i < 3; i++)
     {
-        if (this->getPosition(i, 0) == this->getPosition(i, 1) && this->getPosition(i, 1) == this->getPosition(i, 2))
+        if (this->getPosition(i, 0) == this->getPosition(i, 1) && this->getPosition(i, 0) == this->getPosition(i, 2))
         {
             if (this->getPosition(i, 0) == pc)
             {
                 return +10;
-            }else if(this->getPosition(i, 0) == player)
+            }else if(this->getPosition(i, 0) == player){
                 return -10;
+            }
         }
         
     }
@@ -146,31 +148,36 @@ const int TicTacToe::evaluate(){
     // Looking for X or O to win for columns
     for (int j = 0; j<3; j++)
     {
-        if (this->getPosition(0, j) == this->getPosition(1, j) && this->getPosition(1, j) == this->getPosition(2, j))
+        if (this->getPosition(0, j) == this->getPosition(1, j) && this->getPosition(0, j) == this->getPosition(2, j))
         {
-            if (this->getPosition(0, j) == pc)
+            if (this->getPosition(0, j) == pc){
                 return +10;
- 
-            else if (this->getPosition(0, j) == player)
+            }
+            else if (this->getPosition(0, j) == player){
                 return -10;
+            }
         }
     }
  
     // Looking for X or O to win for diagonals.
-    if (this->getPosition(0, 0) == this->getPosition(1, 1) && this->getPosition(1, 1) == this->getPosition(2, 2))
+    if (this->getPosition(0, 0) == this->getPosition(1, 1) && this->getPosition(0, 0) == this->getPosition(2, 2))
     {
-        if (this->getPosition(0, 0) == pc)
+        if (this->getPosition(0, 0) == pc){
             return +10;
-        else if (this->getPosition(0, 0) == player)
+        }
+        else if (this->getPosition(0, 0) == player){
             return -10;
+        }
     }
  
-    if (this->getPosition(0, 2) == this->getPosition(1, 1) && this->getPosition(1, 1) == this->getPosition(2, 0))
+    if (this->getPosition(0, 2) == this->getPosition(1, 1) && this->getPosition(0, 2) == this->getPosition(2, 0))
     {
-        if (this->getPosition(0, 2) == pc)
+        if (this->getPosition(0, 2) == pc){
             return +10;
-        else if (this->getPosition(0, 2) == player)
+        }
+        else if (this->getPosition(0, 2) == player){
             return -10;
+        }
     }
  
     // Else if none of them have won then return 0
@@ -188,7 +195,7 @@ const int TicTacToe::minimax(const int &depth, const bool &isMax){
         return score;
     }
     // If there are no more moves and no winner then it's a tie
-    if (this->getFreeSpaces()>0){
+    if (this->getFreeSpaces() == 0){
         return 0;
     }
 
@@ -206,19 +213,20 @@ const int TicTacToe::minimax(const int &depth, const bool &isMax){
                 {
                     // Pc does a move
                     this->setPosition(i, j, pc);
-
-                    // Call minimax recruseivley and choose the maximum value
+                    logT("test1");
+                    // Call minimax recursively and choose the maximum value
                     best = std::max(best, minimax(depth + 1, !isMax));
 
                     // Undo the move
                     this->setPosition(i, j, this->empty);
-                }
-                
+                }    
             }
-            
         }
         return best;
-    }else{
+    }
+    
+    // if this minimizer's move
+    else{
         int best = 1000;
 
         for (int i = 0; i < 3; i++)
@@ -230,7 +238,7 @@ const int TicTacToe::minimax(const int &depth, const bool &isMax){
                 {
                     // Pc does a move
                     this->setPosition(i, j, player);
-
+                    logT("test2");
                     // Call minimax recruseivley and choose the maximum value
                     best = std::min(best, minimax(depth + 1, !isMax));
 
@@ -245,10 +253,12 @@ const int TicTacToe::minimax(const int &depth, const bool &isMax){
     
 }
 
-const int TicTacToe::findBestMovePosition()
+TicTacToe::Move TicTacToe::findBestMovePosition()
 {
     int bestVal = -1000;
-    int bestMove = -1;
+    Move bestMove;
+    bestMove.row = -1;
+    bestMove.col = -1;
  
     // Traverse all cells, evaluate minimax function for all empt cells. And return the cell with optimal value
     for (int i = 0; i<3; i++)
@@ -260,17 +270,18 @@ const int TicTacToe::findBestMovePosition()
             {
                 // Make the move
                 this->setPosition(i, j, this->pc);
- 
+            
                 // compute evaluation function for this move
                 int moveVal = this->minimax(0, false);
- 
+                
                 // Undo the move
                 this->setPosition(i, j, this->empty);
  
                 // If the value of the current move is more than the best balue, then update best
                 if (moveVal > bestVal)
                 {
-                    bestMove = i*3 + j;
+                    bestMove.row = i;
+                    bestMove.col = j;
                     bestVal = moveVal;
                 }
             }
@@ -281,12 +292,10 @@ const int TicTacToe::findBestMovePosition()
 
 void TicTacToe::pcMove()
 {
-    int position;
-
     if(this->getFreeSpaces() > 0)
     {        
-        position = this->findBestMovePosition();      
-        this->setPosition(position, 0, pc);
+        Move bestMove = this->findBestMovePosition();
+        this->setPosition(bestMove.row, bestMove.col, pc);
     }
     else
     {
