@@ -137,9 +137,9 @@ const int TicTacToe::evaluate(){
         {
             if (this->getPosition(i, 0) == pc)
             {
-                return +10;
+                return +1;
             }else if(this->getPosition(i, 0) == player){
-                return -10;
+                return -1;
             }
         }
         
@@ -151,10 +151,10 @@ const int TicTacToe::evaluate(){
         if (this->getPosition(0, j) == this->getPosition(1, j) && this->getPosition(0, j) == this->getPosition(2, j))
         {
             if (this->getPosition(0, j) == pc){
-                return +10;
+                return +1;
             }
             else if (this->getPosition(0, j) == player){
-                return -10;
+                return -1;
             }
         }
     }
@@ -163,20 +163,20 @@ const int TicTacToe::evaluate(){
     if (this->getPosition(0, 0) == this->getPosition(1, 1) && this->getPosition(0, 0) == this->getPosition(2, 2))
     {
         if (this->getPosition(0, 0) == pc){
-            return +10;
+            return +1;
         }
         else if (this->getPosition(0, 0) == player){
-            return -10;
+            return -1;
         }
     }
  
     if (this->getPosition(0, 2) == this->getPosition(1, 1) && this->getPosition(0, 2) == this->getPosition(2, 0))
     {
         if (this->getPosition(0, 2) == pc){
-            return +10;
+            return +1;
         }
         else if (this->getPosition(0, 2) == player){
-            return -10;
+            return -1;
         }
     }
  
@@ -184,73 +184,76 @@ const int TicTacToe::evaluate(){
     return 0;   
 }
 
-const int TicTacToe::minimax(const int &depth, const bool &isMax){
+const int TicTacToe::minimax(const int &depth, const bool &isAi){
     int score = this->evaluate();
     // If maximize has won the game return their evaluated score
-    if (score == 10){
+    if (score == 1){
         return score;
     }
     // If Minimizer has won the game return their evaluated score
-    if (score == -10){
+    if (score == -1){
         return score;
     }
     // If there are no more moves and no winner then it's a tie
     if (this->getFreeSpaces() == 0){
         return 0;
     }
-
-    // if this maximizar's move
-    if (isMax)
-    {
-        int best = -1000;
-
-        for (int i = 0; i < 3; i++)
+    if (depth < 9)
+    {    
+        // if this maximizar's move
+        if (isAi)
         {
-            for (int j = 0; j < 3; j++)
+            int bestScore = -1000;
+
+            for (int i = 0; i < 3; i++)
             {
-                // Check if the position is empty
-                if (this->getPosition(i, j) == this->empty)
+                for (int j = 0; j < 3; j++)
                 {
-                    // Pc does a move
-                    this->setPosition(i, j, pc);
-                    logT("test1");
-                    // Call minimax recursively and choose the maximum value
-                    best = std::max(best, minimax(depth + 1, !isMax));
+                    // Check if the position is empty
+                    if (this->getPosition(i, j) == this->empty)
+                    {
+                        // Pc does a move
+                        this->setPosition(i, j, pc);
+                        logT("PC");
+                        // Call minimax recursively and choose the maximum value
+                        bestScore = std::max(bestScore, this->minimax(depth + 1, false));
 
-                    // Undo the move
-                    this->setPosition(i, j, this->empty);
-                }    
-            }
-        }
-        return best;
-    }
-    
-    // if this minimizer's move
-    else{
-        int best = 1000;
-
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; i < 3; j++)
-            {
-                // Check if the position is empty
-                if (this->getPosition(i, j) == this->empty)
-                {
-                    // Pc does a move
-                    this->setPosition(i, j, player);
-                    logT("test2");
-                    // Call minimax recruseivley and choose the maximum value
-                    best = std::min(best, minimax(depth + 1, !isMax));
-
-                    // Undo the move
-                    this->setPosition(i, j, this->empty);
+                        // Undo the move
+                        this->setPosition(i, j, this->empty);
+                    }    
                 }
             }
-            
+            return bestScore;
         }
-        return best;
-    }
-    
+        
+        // if this minimizer's move
+        else{
+            int bestScore = 1000;
+
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; i < 3; j++)
+                {
+                    // Check if the position is empty
+                    if (this->getPosition(i, j) == this->empty)
+                    {
+                        // Pc does a move
+                        this->setPosition(i, j, player);
+                        logT("Player");
+                        // Call minimax recursively and choose the maximum value
+                        bestScore = std::min(bestScore, this->minimax(depth + 1, true));
+
+                        // Undo the move
+                        this->setPosition(i, j, this->empty);
+                    }
+                }
+                
+            }
+            return bestScore;
+        }
+    }else{
+        return 0;
+    }  
 }
 
 TicTacToe::Move TicTacToe::findBestMovePosition()
