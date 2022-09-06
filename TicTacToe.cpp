@@ -254,7 +254,7 @@ const int TicTacToe::minimax(const int &depth, const bool &isAi){
     }else{
         return 0;
     }  
-}
+} // this shit sucks
 
 TicTacToe::Move TicTacToe::findBestMovePosition()
 {
